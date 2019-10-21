@@ -2,14 +2,11 @@ package logic;
 
 import data.Product;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class ShoppingCart<T extends Product> implements Serializable {
-
-    //public for jackson serialization
-    public final ArrayList<T> productsCollection;
+public class ShoppingCart<T extends Product> {
+    private final ArrayList<T> productsCollection;
 
     public ShoppingCart() {
         productsCollection = new ArrayList<>();
@@ -19,6 +16,7 @@ public class ShoppingCart<T extends Product> implements Serializable {
         this.productsCollection = productsCollection;
     }
 
+
     public void add(T product) {
         productsCollection.add(product);
     }
@@ -26,7 +24,6 @@ public class ShoppingCart<T extends Product> implements Serializable {
     public void delete(T product) {
         productsCollection.remove(product);
     }
-
 
     public String showAll() {
         return productsCollection.stream().map(Object::toString).collect(Collectors.joining(", "));

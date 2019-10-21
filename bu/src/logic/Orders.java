@@ -69,6 +69,6 @@ public class Orders<T extends Order> {
     public synchronized String toString() {
         return "Orders[" +  ordersCollection.size() + "] {"
                 + ordersCollection.stream().map(Object::toString).collect(Collectors.joining("\n\t", "\n\t", "\n"))
-            + "}";
+                + "}";
     }
 }

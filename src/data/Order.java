@@ -1,24 +1,48 @@
 package data;
 
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import logic.ShoppingCart;
 
+import java.io.IOException;
+import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
-public class Order {
+public class Order implements Serializable {
+
     public enum STATUSES {
         AWAITING,
         PROCESSED
     }
 
+    private final UUID id;
+
     private ShoppingCart cart;
     private STATUSES status;
-    private LocalDateTime createTime;
-    private LocalDateTime expectedTime;
+
     private Credentials userInfo;
+
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime createTime;
+
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime expectedTime;
 
 
     public Order(Duration duration, Credentials userInfo, ShoppingCart cart) {
+        id = UUID.randomUUID();
         status = STATUSES.AWAITING;
         this.userInfo = userInfo;
         this.createTime = LocalDateTime.now();
@@ -26,6 +50,10 @@ public class Order {
         this.expectedTime = createTime.plusSeconds(duration.getSeconds());
     }
 
+    //ONLY FOR CREATE BY Orders.checkout()
+    public Order() {
+        id = UUID.randomUUID();
+    }
 
     public STATUSES getStatus() {
         return status;
@@ -67,8 +95,40 @@ public class Order {
         this.cart = cart;
     }
 
+    public UUID getId() {
+        return id;
+    }
+
     @Override
     public String toString() {
         return "Order { " + status + " from " + createTime + " to " + expectedTime + "; Cart {" + cart.showAll() + " } }";
+    }
+}
+
+
+class LocalDateTimeSerializer extends StdSerializer<LocalDateTime> {
+
+    protected LocalDateTimeSerializer() {
+        super(LocalDateTime.class);
+    }
+
+    @Override
+    public void serialize(LocalDateTime value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+        String svalue = value.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME); //todo: какой форматтер использовать?
+        gen.writeString(svalue);
+    }
+}
+
+
+class LocalDateTimeDeserializer extends StdDeserializer<LocalDateTime> {
+
+    protected LocalDateTimeDeserializer() {
+        super(LocalDateTime.class);
+    }
+
+    @Override
+    public LocalDateTime deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+        String value = p.getText();
+        return LocalDateTime.parse(value, DateTimeFormatter.ISO_LOCAL_DATE_TIME); //todo: какой форматтер использовать?
     }
 }

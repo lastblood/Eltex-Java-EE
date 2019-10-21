@@ -24,10 +24,4 @@ public class ProductFactory {
             default: throw new IllegalArgumentException("Wrong type: " + type);
         }
     }
-
-    public static Product createRandomProduct() {
-        Product p = new ProductFactory(Math.random() > 0.5 ? "coffee" : "tea").create();
-        p.create();
-        return p;
-    }
 }

@@ -1,18 +1,15 @@
 package data;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import logic.ConsoleInput;
 import logic.UtilityRandom;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.HashSet;
 import java.util.UUID;
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "@class")
-abstract public class Product implements ICrudAction, Serializable {
-    private static final HashSet<UUID> identifiers = new HashSet<>();
+abstract public class Product implements ICrudAction {
+    public static final HashSet<UUID> identifiers = new HashSet<>();
 
     private static long object_counter = 0;
 
@@ -88,22 +85,6 @@ abstract public class Product implements ICrudAction, Serializable {
 
     public String getCountryManufacture() {
         return countryManufacture;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public void setFirmSupplier(String firmSupplier) {
-        this.firmSupplier = firmSupplier;
-    }
-
-    public void setCountryManufacture(String countryManufacture) {
-        this.countryManufacture = countryManufacture;
     }
 
     @Override

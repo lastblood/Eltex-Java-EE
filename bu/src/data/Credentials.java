@@ -2,10 +2,9 @@ package data;
 
 import logic.UtilityRandom;
 
-import java.io.Serializable;
 import java.util.UUID;
 
-public class Credentials implements Serializable {
+public class Credentials {
     public final UUID id;
 
     public Credentials(UUID id) {
@@ -53,7 +52,6 @@ public class Credentials implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-
 
     public static Credentials getRandomInstance() {
         UtilityRandom random = new UtilityRandom();
