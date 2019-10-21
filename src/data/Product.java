@@ -1,8 +1,8 @@
 package data;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import logic.ConsoleInput;
-import logic.UtilityRandom;
+import logic.utils.ConsoleInput;
+import logic.utils.UtilityRandom;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

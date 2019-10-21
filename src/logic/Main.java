@@ -1,62 +1,18 @@
 package logic;
 
 import data.*;
+import logic.utils.UtilityRandom;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.math.BigInteger;
 import java.net.*;
 import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.*;
-import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
 
 public class Main {
-
-    /*public static void main(String[] args) {
-        switch (args[0]) {
-            case "server":
-                break;
-            case "client":
-                break;
-        }
-
-
-
-
-        while(true) {
-            //А нужен ли этот общий буфер?
-            System.out.println(LocalDateTime.now() + "\n" + orders.toString());
-
-            String s = scan.next();
-            switch (s.toLowerCase()) {
-                case "status":
-                case "info":
-                    break;
-                case "awaiting":
-                case "check":
-                    awaitingCheck.startCheck();
-                    break;
-                case "create":
-                case "random":
-                    createCheck.startCheck();
-                    break;
-                case "delete":
-                case "processed":
-                    processedCheck.startCheck();
-                    break;
-                case "exit":
-                case "quit":
-                    System.exit(0);
-                default:
-                    System.out.println("Wrong command");
-            }
-        }
-    }*/
 
     static void server() throws SocketException {
         Orders<Order> orders = new Orders<>();
@@ -97,22 +53,6 @@ public class Main {
     }
 
 
-    class TcpSocketRunnable implements Runnable {
-        ServerSocket serverSocket;
-        List<ServerSocket> free;
-        List<ServerSocket> used;
-
-        public TcpSocketRunnable(List<ServerSocket> free, List<ServerSocket> used) {
-            this.serverSocket = serverSocket;
-            this.free = free;
-            this.used = used;
-        }
-
-        @Override
-        public void run() {
-
-        }
-    }
 
 
     //TODO: откуда клиент знает список продуктов? Сам создает, хранит в себе или принимает от сервера?
@@ -173,48 +113,6 @@ public class Main {
             }
 
         }
-
-
-        /*Scanner scan = new Scanner(System.in);
-
-        System.out.print("Enter count of products: ");
-        int count = scan.nextInt();
-
-        for (int i = 0; i < count; i++) {
-            try {
-                boolean random = false;
-                System.out.print("Enter product #" + (i+1) + " type: ");
-                String s = scan.next();
-                if(s.equalsIgnoreCase("random") || s.equalsIgnoreCase("r")) {
-                    s = new String[]{"tea", "coffee"}[(int) Math.round(Math.random())];
-                    random = true;
-                }
-
-                Product p = new ProductFactory(s).create();
-                if(random)
-                    p.create();
-                else
-                    p.update(); //todo: неверное разделение обязанностей, потанцевальный конфликт сканеров
-
-                p.read();
-
-                products.add(p);
-            } catch (Exception e) {
-                System.err.println("Input exception");
-            }
-        }
-
-        ShoppingCart<Product> cart = new ShoppingCart<>();
-        for (Product temp : products) {
-            System.out.println("How many " + temp.getName() + " need to be added in order?");
-            int countOfProduct = scan.nextInt();
-            for (int j = 0; j < countOfProduct; j++)
-                cart.add(temp);
-        }*/
-
-//        Order order = new Order(Duration.ofSeconds(20), credentials, cart);
-
-
     }
 
     static DatagramPacket waitForUDPPacket(DatagramSocket socket) throws IOException {

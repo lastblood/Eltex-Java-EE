@@ -1,6 +1,6 @@
 package data;
 
-import logic.ConsoleInput;
+import logic.utils.ConsoleInput;
 
 public class CoffeeProduct extends Product {
     public enum BEAN_TYPES {

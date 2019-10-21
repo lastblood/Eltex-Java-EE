@@ -1,6 +1,6 @@
 package data;
 
-import logic.UtilityRandom;
+import logic.utils.UtilityRandom;
 
 import java.io.Serializable;
 import java.util.UUID;

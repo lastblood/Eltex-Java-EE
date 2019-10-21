@@ -1,6 +1,6 @@
 package data;
 
-import logic.ConsoleInput;
+import logic.utils.ConsoleInput;
 
 public class TeaProduct extends Product {
     private String packageType;
