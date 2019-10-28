@@ -2,7 +2,9 @@ package filesio;
 
 import data.Credentials;
 import data.Order;
-import logic.*;
+import logic.collections.Orders;
+import logic.collections.ProductFactory;
+import logic.collections.ShoppingCart;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,7 +21,7 @@ public class SerializationTest {
         Order o = new Order(Duration.ofSeconds(20), Credentials.getRandomInstance(), cart);
         System.out.println("CREATED " + o);
 
-        Orders<Order> orders = new Orders<>();
+        Orders orders = new Orders();
         orders.add(o);
 
         File dir = new File(".");

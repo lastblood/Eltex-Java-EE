@@ -1,8 +1,8 @@
 package filesio;
 
 import data.Order;
-import logic.IOrder;
-import logic.Orders;
+import logic.collections.IOrder;
+import logic.collections.Orders;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,7 +46,7 @@ public abstract class AManageOrder implements IOrder {
 
     @Override
     public Orders readAll() throws IOException, ClassNotFoundException {
-        Orders<Order> result = new Orders<>();
+        Orders result = new Orders();
 
         File[] files = path.listFiles(x -> x.getName().endsWith(EXT));
         if(files == null) return result;
